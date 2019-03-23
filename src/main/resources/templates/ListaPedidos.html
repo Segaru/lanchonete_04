@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="LayoutPadrao">
+
+<section layout:fragment="Conteudo">
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Lista de pedidos</h1>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" method="POST" 
+			    th:object="${pedido}"
+			    th:action="@{/pedidos}"
+				style="margin: 20px 0">
+				<div class="form-group">
+					<input type="hidden" th:field="*{id}">
+					<input type="text" class="form-control" placeholder="Mesa"
+						th:field="*{mesa}" /> 
+					<input type="text" class="form-control" placeholder="Tempo de Espera"
+						th:field="*{tempoEspera}" /> 
+					<button type="submit" class="btn btn-primary">Adicionar</button>
+				</div>
+			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Mesa</th>
+						<th>Tempo de Espera</th>
+						<th colspan=2> Ação </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pedido : ${pedidos}">
+						<td th:text="${pedido.id}"></td>
+						<td th:text="${pedido.mesa}"></td>
+						<td th:text="${pedido.tempoEspera}"></td>
+						
+						<td>
+						<a th:href="@{/pedidos/alterar/}+${pedido.id}" class="glyphicon glyphicon-pencil"> </a>
+						</td>
+						<td>
+						<a th:href="@{/pedidos/excluir/}+${pedido.id}" 
+						   class="glyphicon glyphicon-trash"> </a>
+						</td>		
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+</html>	

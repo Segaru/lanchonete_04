@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="LayoutPadrao">
+
+<section layout:fragment="Conteudo">
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Lista de lanches</h1>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" method="POST" th:object="${lanche}"
+				th:action="@{/lanches}" style="margin: 20px 0">
+				<div class="form-group">
+					<input type="hidden" th:field="*{id}"> 
+					<select class="form-control" id="pedido" th:field="*{pedido}">
+						<option th:each="f : ${pedidos}" th:value="${f.id}" th:text="${f.mesa}"></option>
+					</select> 
+					<input type="text" class="form-control" placeholder="Nome" th:field="*{nome}" /> 
+					<input type="text" class="form-control" placeholder="Descrição" th:field="*{descricao}" />
+					<input type="text" class="form-control" placeholder="Valor" th:field="*{valor}" /> 
+					<button type="submit" class="btn btn-primary">Adicionar</button>
+				</div>
+			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Descrição</th>
+						<th>Valor</th>
+						<th>Pedido</th>
+
+						<th colspan=2>Ação</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="lanche : ${lanches}">
+						<td th:text="${lanche.nome}"></td>
+						<td th:text="${lanche.descricao}"></td>
+						<td th:text="${lanche.valor}"></td>
+						<td th:text="${lanche.pedido.mesa}"></td>
+
+						<td><a th:href="@{/lanches/alterar/}+${lanche.id}"
+							class="glyphicon glyphicon-pencil"> </a></td>
+						<td><a th:href="@{/lanches/excluir/}+${lanche.id}"
+							class="glyphicon glyphicon-trash"> </a></td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+</html>
